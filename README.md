@@ -1,7 +1,17 @@
-🛒 ###**E_Commerce_Microservices**
+# 🛒 E_Commerce_Microservices
 
-This is a **Microservices-based E-Commerce Platform** built with **.NET Core**.  
-The solution is divided into multiple independent services with a **Shared Library** and an **API Gateway**.
+`E_Commerce_Microservices` is a **scalable and modular E-Commerce Platform** built using **.NET Core Microservices Architecture**.  
+Instead of creating one big monolithic application, the solution is divided into **independent, loosely coupled services** that can be developed, deployed, and scaled individually.  
+
+This architecture ensures:  
+- **Scalability** → Each service (Auth, Product, Order) can scale independently  
+- **Flexibility** → Easy to add new features without affecting existing services  
+- **Maintainability** → Code is organized and easy to debug  
+- **Security** → JWT Authentication & centralized API Gateway  
+- **Reliability** → Logging, Exception Handling, and Retry Policies  
+
+---
+
 
 
  🚀 Tech Stack
@@ -71,15 +81,3 @@ Acts as the **single entry point** for all client requests.
 
 ---
 - **Microservices + API Gateway Pattern**
-
-- ## 📂 Project Structure
-
-### 1. **E_CommerceSharedLibrary**
-Common library used across all services.  
-Includes:
-- **JWT Authentication setup** (extension method for token validation)  
-- **Serilog Logging** (console + file logging)  
-- **Global Exception Middleware** (handles errors & returns custom JSON response)  
-- **API Gateway Header Middleware** (ensures requests come only via API Gateway)  
-- **Generic Repository Interface** for CRUD operations  
-- **Common Response Wrapper** 
