@@ -17,7 +17,7 @@ namespace E_CommerceSharedLibrary.DependencyInjecation
             // 🔹 Add generic database context with retry
             services.AddDbContext<TContext>(options =>
                 options.UseSqlServer(
-                    configuration.GetConnectionString("ecommerceconnectionstring"),
+                    configuration.GetConnectionString("E-CommerceMicroservice"),
                     sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()
                 ));
 
@@ -52,7 +52,7 @@ namespace E_CommerceSharedLibrary.DependencyInjecation
         public static IApplicationBuilder UseSharedPolicy(this IApplicationBuilder app)
         {
             app.UseMiddleware<GlobalExceptionMiddleware>();
-            app.UseMiddleware<ListenToOnlyApiGateway>();
+          //  app.UseMiddleware<ListenToOnlyApiGateway>();
 
             return app;
         }
