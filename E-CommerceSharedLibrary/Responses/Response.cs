@@ -1,5 +1,4 @@
-﻿
-namespace E_CommerceSharedLibrary.Responses
+﻿namespace E_CommerceSharedLibrary.Responses
 {
-   public record Response(bool flag = false , string Message = null!);
+    public record Response(bool Success = false, string Message = null!, string? Data = null);
 }
