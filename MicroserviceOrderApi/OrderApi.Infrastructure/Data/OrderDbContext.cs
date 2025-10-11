@@ -12,7 +12,11 @@ namespace OrderApi.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // Add any entity configuration here
+
+            modelBuilder.Entity<Order>()
+                .Property(o => o.Id)
+                .ValueGeneratedNever(); // EF ला sang ki ID manually assign होईल
         }
+
     }
 }

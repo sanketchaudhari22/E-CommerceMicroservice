@@ -15,7 +15,6 @@ namespace AuthenticationApi.Domain.Entities
         public string? Email { get; set; }
         public string? Password { get; set; }
         public string? Role { get; set; }
-        public string? MyProperty { get; set; }
         public DateTime DateRegistered { get; set; } = DateTime.UtcNow;
       
     }

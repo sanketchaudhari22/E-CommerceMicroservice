@@ -6,16 +6,13 @@ using E_CommerceSharedLibrary.Responses;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AuthenticationApi.Infrastructure.Repositories
 {
-    internal class UserRepository : IUserInterface
+    public class UserRepository : IUserInterface
     {
         private readonly AuthenticationDbContext _context;
         private readonly IConfiguration _config;
@@ -26,90 +23,109 @@ namespace AuthenticationApi.Infrastructure.Repositories
             _config = config;
         }
 
-        public async Task<AppUser?> GetUserByEmail(string email)
-        {
-            return await _context.users.FirstOrDefaultAsync(u => u.Email == email);
-        }
+        // Case-insensitive email search
+        private async Task<AppUser?> GetUserByEmail(string email)
+            => await _context.Users
+                .FirstOrDefaultAsync(u => u.Email!.ToLower() == email.ToLower());
 
         public async Task<GetUserDto> GetUser(int userId)
         {
-            var user = await _context.users.FindAsync(userId);
-            if (user is null)
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null)
                 throw new Exception("User not found");
 
             return new GetUserDto(
                 user.Id,
-                user.Name!,
-                user.TelephoneNumber!,
-                user.Password!,
-                user.Address!,
-                user.Email!,
-                user.Role!
+                user.Name ?? "",
+                user.TelephoneNumber ?? "",
+                user.Address ?? "",
+                user.Email ?? "",
+                user.Password ?? "",
+                user.Role ?? "User"
             );
         }
 
-        public async Task<Response> Login(LoginDto loginDto)
+        public async Task<Response> Register(AppUserDto dto)
         {
-            var getUser = await GetUserByEmail(loginDto.Email);
-            if (getUser is null)
-                return new Response(false, "Invalid credentials");
+            var exists = await GetUserByEmail(dto.Email);
+            if (exists != null)
+                return new Response(false, "Email already registered");
 
-            bool verifyPassword = BCrypt.Net.BCrypt.Verify(loginDto.Password, getUser.Password);
-            if (!verifyPassword)
-                return new Response(false, "Invalid credentials");
+            var user = new AppUser
+            {
+                Name = dto.Name,
+                Email = dto.Email,
+                Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+                TelephoneNumber = dto.TelephoneNumber,
+                Address = dto.Address,
+                Role = dto.Role ?? "User"
+            };
 
-            string token = GenerateToken(getUser);
-            return new Response(true, "Login successful", token);
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            return new Response(true, "User registered successfully");
         }
+
+        public async Task<Response> Login(LoginDto dto)
+        {
+            try
+            {
+                var email = dto.Email?.Trim();
+                var user = await GetUserByEmail(email);
+                if (user == null)
+                {
+                    Console.WriteLine("User not found: " + email);
+                    return new Response(false, "User not found");
+                }
+
+                bool verifyPassword = BCrypt.Net.BCrypt.Verify(dto.Password.Trim(), user.Password.Trim());
+                if (!verifyPassword)
+                {
+                    Console.WriteLine("Invalid password for: " + email);
+                    return new Response(false, "Invalid password");
+                }
+
+                string token = GenerateToken(user);
+                return new Response(true, "Login successful", token);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Login exception: " + ex.Message);
+                return new Response(false, "Something went wrong: " + ex.Message);
+            }
+        }
+
 
         private string GenerateToken(AppUser user)
         {
-            var key = Encoding.UTF8.GetBytes(_config["Authentication:Key"]!);
-            var securityKey = new SymmetricSecurityKey(key);
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var keyString = _config["Authentication:Key"];
+            if (string.IsNullOrEmpty(keyString))
+                throw new Exception("JWT Key missing in config");
+
+            var key = Encoding.UTF8.GetBytes(keyString);
+
+            var issuer = _config["Authentication:Issuer"] ?? throw new Exception("JWT Issuer missing");
+            var audience = _config["Authentication:Audience"] ?? throw new Exception("JWT Audience missing");
+
+            var creds = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
 
             var claims = new List<Claim>
             {
-                new(ClaimTypes.Name, user.Name!),
-                new(ClaimTypes.Email, user.Email!)
+                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new(ClaimTypes.Email, user.Email ?? "noemail@example.com"),
+                new(ClaimTypes.Role, user.Role ?? "User")
             };
 
-            if (!string.IsNullOrEmpty(user.Role))
-                claims.Add(new(ClaimTypes.Role, user.Role!));
-
             var token = new JwtSecurityToken(
-                issuer: _config["Authentication:Issuer"],
-                audience: _config["Authentication:Audience"],
+                issuer: issuer,
+                audience: audience,
                 claims: claims,
                 expires: DateTime.UtcNow.AddHours(2),
-                signingCredentials: credentials
+                signingCredentials: creds
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        public async Task<Response> Register(AppUserDto appUserDto)
-        {
-            var getUser = await GetUserByEmail(appUserDto.Email);
-            if (getUser is not null)
-                return new Response(false, "Email already registered");
-
-            var newUser = new AppUser
-            {
-                Name = appUserDto.Name,
-                Email = appUserDto.Email,
-                Password = BCrypt.Net.BCrypt.HashPassword(appUserDto.Password),
-                TelephoneNumber = appUserDto.TelephoneNumber,
-                Address = appUserDto.Address,
-                Role = appUserDto.Role
-            };
-
-            _context.users.Add(newUser);
-            await _context.SaveChangesAsync();
-
-            return newUser.Id > 0
-                ? new Response(true, "User registered successfully")
-                : new Response(false, "Invalid data provided");
         }
     }
 }

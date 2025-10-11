@@ -1,5 +1,5 @@
-﻿using ProductApi.Application.DTOs;
-using ProductApi.Domain.Entities;
+﻿using ProductApi.Domain.Entities;
+using ProductApi.Application.DTOs;
 using System.Collections.Generic;
 using System.Linq;
 

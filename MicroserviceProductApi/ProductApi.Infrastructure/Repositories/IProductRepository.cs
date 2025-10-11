@@ -24,20 +24,14 @@ namespace ProductApi.Infrastructure.Repositories
             return entity;
         }
 
-        public async Task<IEnumerable<Product>> GetAllAsync()
-        {
-            return await _dbContext.Products.ToListAsync();
-        }
+        public async Task<IEnumerable<Product>> GetAllAsync() =>
+            await _dbContext.Products.ToListAsync();
 
-        public async Task<Product?> FindByIdAsync(int id)
-        {
-            return await _dbContext.Products.FindAsync(id);
-        }
+        public async Task<Product?> FindByIdAsync(int id) =>
+            await _dbContext.Products.FindAsync(id);
 
-        public async Task<Product?> GetByAsync(Expression<Func<Product, bool>> expression)
-        {
-            return await _dbContext.Products.FirstOrDefaultAsync(expression);
-        }
+        public async Task<Product?> GetByAsync(Expression<Func<Product, bool>> expression) =>
+            await _dbContext.Products.FirstOrDefaultAsync(expression);
 
         public async Task<Product> UpdateAsync(Product entity)
         {
@@ -50,7 +44,6 @@ namespace ProductApi.Infrastructure.Repositories
 
             _dbContext.Products.Update(existing);
             await _dbContext.SaveChangesAsync();
-
             return existing;
         }
 

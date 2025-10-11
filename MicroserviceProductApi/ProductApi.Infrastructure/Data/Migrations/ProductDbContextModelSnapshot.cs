@@ -24,10 +24,7 @@ namespace ProductApi.Infrastructure.Data.Migrations
             modelBuilder.Entity("ProductApi.Domain.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()

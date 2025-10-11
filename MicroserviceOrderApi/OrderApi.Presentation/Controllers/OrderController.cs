@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OrderApi.Application.DTOs;
 using OrderApi.Application.DTOs.Conversion;
 using OrderApi.Application.Interface;
+using OrderApi.Application.Service;
 using OrderApi.Domain.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +11,9 @@ using System.Threading.Tasks;
 
 namespace OrderApi.Presentation.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/orders")]
     [ApiController]
+    [Authorize]
     public class OrderController : ControllerBase
     {
         private readonly IOrderInterface _orderInterface;
@@ -52,6 +55,22 @@ namespace OrderApi.Presentation.Controllers
             var list = orders.ToDtoList();
             return Ok(list);
         }
+
+        // GET: api/order/details/5
+        [HttpGet("details/{orderId:int}")]
+        public async Task<ActionResult<OrderDetailsDto>> GetOrderDetails(int orderId, [FromServices] IOrderService orderService)
+        {
+            try
+            {
+                var details = await orderService.GetOrderDetails(orderId);
+                return Ok(details);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
 
         // POST: api/order
         [HttpPost]

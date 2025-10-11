@@ -1,15 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using ProductApi.Application.Conversions;
 using ProductApi.Application.DTOs;
 using ProductApi.Application.Interface;
-using ProductApi.Application.Conversions;
 using System.Collections.Generic;
+using System.Linq;  
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace ProductApi.Presentation.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/products")]
     [ApiController]
+    [AllowAnonymous]
     public class ProductController : ControllerBase
     {
         private readonly IProductInterface _productInterface;
@@ -36,6 +38,7 @@ namespace ProductApi.Presentation.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles="Admin")]
         public async Task<ActionResult<ProductDTO>> CreateProduct([FromBody] ProductDTO productDto)
         {
             if (productDto == null) return BadRequest("Product data is null.");
@@ -46,6 +49,7 @@ namespace ProductApi.Presentation.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ProductDTO>> UpdateProduct(int id, [FromBody] ProductDTO productDto)
         {
             if (productDto == null || id != productDto.Id) return BadRequest("Invalid product data.");
@@ -58,6 +62,7 @@ namespace ProductApi.Presentation.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
             var product = await _productInterface.FindByIdAsync(id);

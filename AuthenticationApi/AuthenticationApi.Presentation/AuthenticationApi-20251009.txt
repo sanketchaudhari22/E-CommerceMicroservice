@@ -1,0 +1,65 @@
+2025-10-09 11:43:49.209 +05:30 [INF] User profile is available. Using 'C:\Users\SANKET\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-10-09 11:43:50.372 +05:30 [INF] Now listening on: http://localhost:5000
+2025-10-09 11:43:51.047 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-10-09 11:43:51.983 +05:30 [INF] Hosting environment: Development
+2025-10-09 11:43:51.990 +05:30 [INF] Content root path: C:\Users\SANKET\source\repos\E-CommerceMicroservice\AuthenticationApi\AuthenticationApi.Presentation
+2025-10-09 11:44:04.963 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/index.html - null null
+2025-10-09 11:44:05.519 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5000/swagger/index.html - 200 null text/html;charset=utf-8 563.6699ms
+2025-10-09 11:44:05.590 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5000/_vs/browserLink - null null
+2025-10-09 11:44:05.593 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5000/_framework/aspnetcore-browser-refresh.js - null null
+2025-10-09 11:44:06.147 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5000/_framework/aspnetcore-browser-refresh.js - 200 16545 application/javascript; charset=utf-8 553.9169ms
+2025-10-09 11:44:06.863 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5000/_vs/browserLink - 200 null text/javascript; charset=UTF-8 1273.5127ms
+2025-10-09 11:44:07.018 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json - null null
+2025-10-09 11:44:07.081 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5000/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 62.8119ms
+2025-10-09 11:44:20.873 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Authentication/1 - null null
+2025-10-09 11:44:20.908 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-10-09 11:44:21.271 +05:30 [INF] Executing endpoint 'AuthenticationApi.Presentation.Controllers.AuthenticationController.GetUser (AuthenticationApi.Presentation)'
+2025-10-09 11:44:21.306 +05:30 [INF] Route matched with {action = "GetUser", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AuthenticationApi.Application.DTOs.GetUserDto]] GetUser(Int32) on controller AuthenticationApi.Presentation.Controllers.AuthenticationController (AuthenticationApi.Presentation).
+2025-10-09 11:44:25.037 +05:30 [INF] Executed DbCommand (81ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[Address], [u].[DateRegistered], [u].[Email], [u].[Name], [u].[Password], [u].[Role], [u].[TelephoneNumber]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2025-10-09 11:44:25.406 +05:30 [INF] Executing OkObjectResult, writing value of type 'AuthenticationApi.Application.DTOs.GetUserDto'.
+2025-10-09 11:44:25.433 +05:30 [INF] Executed action AuthenticationApi.Presentation.Controllers.AuthenticationController.GetUser (AuthenticationApi.Presentation) in 4115.5694ms
+2025-10-09 11:44:25.555 +05:30 [INF] Executed endpoint 'AuthenticationApi.Presentation.Controllers.AuthenticationController.GetUser (AuthenticationApi.Presentation)'
+2025-10-09 11:44:25.582 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/Authentication/1 - 200 null application/json; charset=utf-8 4698.6507ms
+2025-10-09 11:44:31.582 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Authentication/111 - null null
+2025-10-09 11:44:31.590 +05:30 [INF] Executing endpoint 'AuthenticationApi.Presentation.Controllers.AuthenticationController.GetUser (AuthenticationApi.Presentation)'
+2025-10-09 11:44:31.594 +05:30 [INF] Route matched with {action = "GetUser", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AuthenticationApi.Application.DTOs.GetUserDto]] GetUser(Int32) on controller AuthenticationApi.Presentation.Controllers.AuthenticationController (AuthenticationApi.Presentation).
+2025-10-09 11:44:31.650 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[Address], [u].[DateRegistered], [u].[Email], [u].[Name], [u].[Password], [u].[Role], [u].[TelephoneNumber]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2025-10-09 11:44:31.865 +05:30 [INF] Executed action AuthenticationApi.Presentation.Controllers.AuthenticationController.GetUser (AuthenticationApi.Presentation) in 261.2957ms
+2025-10-09 11:44:31.889 +05:30 [INF] Executed endpoint 'AuthenticationApi.Presentation.Controllers.AuthenticationController.GetUser (AuthenticationApi.Presentation)'
+2025-10-09 11:44:32.008 +05:30 [INF] User not found
+2025-10-09 11:44:32.012 +05:30 [WRN] User not found
+2025-10-09 11:44:32.020 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/Authentication/111 - 500 null application/json 438.6526ms
+2025-10-09 11:47:40.226 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Authentication/111 - null null
+2025-10-09 11:47:40.242 +05:30 [INF] Executing endpoint 'AuthenticationApi.Presentation.Controllers.AuthenticationController.GetUser (AuthenticationApi.Presentation)'
+2025-10-09 11:47:40.245 +05:30 [INF] Route matched with {action = "GetUser", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AuthenticationApi.Application.DTOs.GetUserDto]] GetUser(Int32) on controller AuthenticationApi.Presentation.Controllers.AuthenticationController (AuthenticationApi.Presentation).
+2025-10-09 11:47:40.344 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[Address], [u].[DateRegistered], [u].[Email], [u].[Name], [u].[Password], [u].[Role], [u].[TelephoneNumber]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2025-10-09 11:47:40.428 +05:30 [INF] Executed action AuthenticationApi.Presentation.Controllers.AuthenticationController.GetUser (AuthenticationApi.Presentation) in 179.6323ms
+2025-10-09 11:47:40.432 +05:30 [INF] Executed endpoint 'AuthenticationApi.Presentation.Controllers.AuthenticationController.GetUser (AuthenticationApi.Presentation)'
+2025-10-09 11:47:40.511 +05:30 [INF] User not found
+2025-10-09 11:47:40.514 +05:30 [WRN] User not found
+2025-10-09 11:47:40.517 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/Authentication/111 - 500 null application/json 290.7128ms
+2025-10-09 11:51:45.270 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/Authentication/1 - null null
+2025-10-09 11:51:45.278 +05:30 [INF] Executing endpoint 'AuthenticationApi.Presentation.Controllers.AuthenticationController.GetUser (AuthenticationApi.Presentation)'
+2025-10-09 11:51:45.283 +05:30 [INF] Route matched with {action = "GetUser", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AuthenticationApi.Application.DTOs.GetUserDto]] GetUser(Int32) on controller AuthenticationApi.Presentation.Controllers.AuthenticationController (AuthenticationApi.Presentation).
+2025-10-09 11:51:45.299 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[Address], [u].[DateRegistered], [u].[Email], [u].[Name], [u].[Password], [u].[Role], [u].[TelephoneNumber]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2025-10-09 11:51:45.305 +05:30 [INF] Executing OkObjectResult, writing value of type 'AuthenticationApi.Application.DTOs.GetUserDto'.
+2025-10-09 11:51:45.309 +05:30 [INF] Executed action AuthenticationApi.Presentation.Controllers.AuthenticationController.GetUser (AuthenticationApi.Presentation) in 22.7349ms
+2025-10-09 11:51:45.314 +05:30 [INF] Executed endpoint 'AuthenticationApi.Presentation.Controllers.AuthenticationController.GetUser (AuthenticationApi.Presentation)'
+2025-10-09 11:51:45.319 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/Authentication/1 - 200 null application/json; charset=utf-8 49.8689ms
+2025-10-09 15:52:30.820 +05:30 [INF] User profile is available. Using 'C:\Users\SANKET\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-10-09 15:52:30.986 +05:30 [INF] Now listening on: http://localhost:5000
+2025-10-09 15:52:30.989 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-10-09 15:52:30.990 +05:30 [INF] Hosting environment: Development
+2025-10-09 15:52:30.990 +05:30 [INF] Content root path: C:\Users\SANKET\source\repos\E-CommerceMicroservice\AuthenticationApi\AuthenticationApi.Presentation
